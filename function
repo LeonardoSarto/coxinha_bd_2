@@ -1,0 +1,42 @@
+-------Sintaxe básica - Função-------
+
+DELIMITER //
+CREATE FUNCTION criptografia(nome VARCHAR(255))
+RETURNS VARCHAR(255) NOT DETERMINISTIC
+BEGIN
+	DECLARE resultado VARCHAR(255);
+    
+    SET resultado = "Odranoel";
+    
+    RETURN resultado;
+END;
+// DELIMITER ;
+
+SELECT criptografia("Leonardo");
+
+DROP FUNCTION criptografia;
+
+-------Sintaxe básica - Trigger---------
+CREATE TRIGGER TGR_VENDAS_AI
+ON VENDAS
+FOR INSERT
+AS
+BEGIN
+    DECLARE
+    @VALOR  DECIMAL(10,2),
+    @DATA   DATETIME
+
+    SELECT @DATA = DATA, @VALOR = VALOR FROM INSERTED
+
+    UPDATE CAIXA SET SALDO_FINAL = SALDO_FINAL + @VALOR
+    WHERE DATA = @DATA
+END
+GO
+
+-----Sintaxe básica - Procedure---------
+CREATE PROCEDURE Busca
+@CampoBusca VARCHAR (20)
+AS
+SELECT Codigo, Descrição
+FROM NomeTabela
+WHERE Descricao = @CampoBusca
